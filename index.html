@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tri Ân Thầy Cô 20/11 - Vòng Quay Lời Chúc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-light: #fef08a;
+            --gold-main: #eab308;
+            --gold-dark: #a16207;
+            --red-bright: #dc2626;
+            --red-deep: #7f1d1d;
+            --red-darkest: #450a0a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--red-darkest);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Hiệu ứng màn nhung đỏ gợn sóng phía sau */
+        .velvet-curtain {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(69, 10, 10, 0.95) 0%,
+                    rgba(153, 27, 27, 0.85) 6%,
+                    rgba(220, 38, 38, 0.75) 12%,
+                    rgba(127, 29, 29, 0.9) 18%,
+                    rgba(69, 10, 10, 0.98) 24%
+                );
+            background-size: 200% 100%;
+            animation: curtainWave 12s ease-in-out infinite alternate;
+        }
+
+        .velvet-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 45%, rgba(254, 240, 138, 0.22) 0%, rgba(127, 29, 29, 0.65) 55%, rgba(20, 2, 2, 0.92) 100%);
+            pointer-events: none;
+        }
+
+        @keyframes curtainWave {
+            0% { background-position: 0% 50%; transform: scaleX(1.02); }
+            50% { background-position: 50% 50%; transform: scaleX(1.05); }
+            100% { background-position: 100% 50%; transform: scaleX(1.02); }
+        }
+
+        /* Hào quang xoay sau vòng quay */
+        .sunburst-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 150vmax;
+            height: 150vmax;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            background: repeating-conic-gradient(
+                from 0deg,
+                rgba(253, 224, 71, 0.06) 0deg 10deg,
+                transparent 10deg 20deg
+            );
+            animation: spinSlow 40s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes spinSlow {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Font tiêu đề nghệ thuật */
+        .font-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-handwriting {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Hiệu ứng chữ vàng kim */
+        .gold-text {
+            background: linear-gradient(to bottom, #fef9c3 0%, #facc15 45%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        }
+
+        /* Khung chứa vòng quay responsive */
+        .wheel-stage {
+            position: relative;
+            width: min(88vw, 460px);
+            height: min(88vw, 460px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem auto;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hào quang viền ngoài khi đang quay */
+        .wheel-glow {
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #fef08a, #eab308, #dc2626, #facc15, #fef08a);
+            opacity: 0.45;
+            filter: blur(14px);
+            z-index: 0;
+            transition: all 0.4s ease;
+        }
+
+        .wheel-stage.spinning .wheel-glow {
+            opacity: 0.95;
+            filter: blur(20px);
+            animation: pulseGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { transform: scale(0.98); opacity: 0.75; }
+            to { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Viền vàng kim ngoài cùng */
+        .wheel-outer-rim {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 14px;
+            background: linear-gradient(135deg, #fef08a 0%, #eab308 30%, #854d0e 50%, #facc15 75%, #fef9c3 100%);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.75),
+                inset 0 2px 6px rgba(255, 255, 255, 0.8),
+                inset 0 -3px 8px rgba(69, 10, 10, 0.8);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Đèn LED nhấp nháy trên viền vàng */
+        .rim-leds {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .led-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fffbeb;
+            box-shadow: 0 0 8px #fef08a, 0 0 12px #f59e0b;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            transition: opacity 0.2s;
+        }
+
+        .wheel-stage.spinning .led-dot:nth-child(odd) {
+            animation: ledBlink 0.25s infinite alternate;
+        }
+        .wheel-stage.spinning .led-dot:nth-child(even) {
+            animation: ledBlink 0.25s infinite alternate-reverse;
+        }
+
+        @keyframes ledBlink {
+            0% { background: #fef08a; transform: scale(1.25); box-shadow: 0 0 12px #fff, 0 0 20px #facc15; }
+            100% { background: #991b1b; transform: scale(0.85); box-shadow: none; }
+        }
+
+        /* Canvas vòng quay */
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: block;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Kim chỉ định màu vàng kim ở đỉnh */
+        .wheel-pointer {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: 44px;
+            height: 54px;
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.7));
+            transform-origin: 50% 15%;
+        }
+
+        .wheel-pointer.tick {
+            animation: pointerTick 0.12s ease-out;
+        }
+
+        @keyframes pointerTick {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            50% { transform: translateX(-50%) rotate(-18deg); }
+            100% { transform: translateX(-50%) rotate(0deg); }
+        }
+
+        /* Nút tâm vòng quay màu đỏ viền vàng kim */
+        .center-spin-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24%;
+            height: 24%;
+            min-width: 76px;
+            min-height: 76px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ef4444 0%, #b91c1c 55%, #450a0a 100%);
+            border: 4px solid #facc15;
+            box-shadow: 
+                0 0 0 3px #854d0e,
+                0 8px 20px rgba(0, 0, 0, 0.8),
+                inset 0 3px 8px rgba(255, 255, 255, 0.5);
+            z-index: 8;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fef9c3;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+            user-select: none;
+        }
+
+        .center-spin-btn:hover:not(:disabled) {
+            transform: translate(-50%, -50%) scale(1.07);
+            box-shadow: 
+                0 0 0 4px #fef08a,
+                0 0 25px rgba(250, 204, 21, 0.8),
+                inset 0 3px 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .center-spin-btn:active:not(:disabled) {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        .wheel-stage.spinning .center-spin-btn {
+            animation: centerPulse 0.4s infinite alternate;
+        }
+
+        @keyframes centerPulse {
+            from { box-shadow: 0 0 0 3px #facc15, 0 0 15px #ef4444; }
+            to { box-shadow: 0 0 0 5px #fef08a, 0 0 35px #facc15; }
+        }
+
+        /* Canvas hiệu ứng vật rơi & rà chuột */
+        #fallingCanvas, #trail-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        #fallingCanvas { z-index: 25; }
+        #trail-canvas { z-index: 60; }
+
+        /* Lá thư chúc mừng 20/11 */
+        .letter-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 2, 2, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .letter-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .letter-card {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            background: linear-gradient(145deg, #fffdf7 0%, #fef3c7 100%);
+            color: #451a03;
+            border-radius: 20px;
+            border: 4px solid #eab308;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.85),
+                0 0 0 6px rgba(220, 38, 38, 0.85),
+                inset 0 0 30px rgba(234, 179, 8, 0.25);
+            padding: 2rem 1.5rem 1.75rem;
+            transform: scale(0.8) translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .letter-backdrop.active .letter-card {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Viền trang trí bên trong lá thư */
+        .letter-inner-border {
+            border: 2px dashed #d97706;
+            border-radius: 14px;
+            padding: 1.5rem 1.25rem;
+            position: relative;
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Sticker trang trí trên khung lá thư */
+        .letter-sticker {
+            position: absolute;
+            user-select: none;
+            pointer-events: none;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+            z-index: 5;
+            animation: floatSticker 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatSticker {
+            0% { transform: translateY(0) rotate(-4deg); }
+            100% { transform: translateY(-6px) rotate(4deg); }
+        }
+
+        /* Nút bấm điều khiển đẹp mắt */
+        .btn-gold {
+            background: linear-gradient(to bottom, #fde047 0%, #eab308 50%, #ca8a04 100%);
+            color: #450a0a;
+            font-weight: 700;
+            border: 2px solid #fef9c3;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(250, 204, 21, 0.5);
+            filter: brightness(1.06);
+        }
+        .btn-gold:active {
+            transform: translateY(0);
+        }
+
+        .btn-red-outline {
+            background: rgba(69, 10, 10, 0.75);
+            color: #fef08a;
+            border: 1.5px solid #eab308;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
+        }
+        .btn-red-outline:hover {
+            background: rgba(153, 27, 27, 0.9);
+            border-color: #fef08a;
+        }
+
+        /* Custom scrollbar cho modal */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn nhung đỏ & hào quang nền -->
+    <div class="velvet-curtain"></div>
+    <div class="velvet-overlay"></div>
+    <div class="sunburst-bg"></div>
+
+    <!-- Canvas sticker rơi (hoa ở màn chính, sách/vở/bó hoa khi mở thư) -->
+    <canvas id="fallingCanvas"></canvas>
+    <!-- Canvas bông hoa bay theo chuột siêu mượt (GPU + Offscreen Sprite Cache + Object Pool) -->
+    <canvas id="trail-canvas"></canvas>
+
+    <!-- Thanh công cụ trên cùng -->
+    <header class="w-full max-w-5xl px-4 pt-3 pb-1 flex flex-wrap items-center justify-between gap-2 z-30">
+        <div class="flex items-center gap-2">
+            <!-- Nút bật/tắt âm thanh -->
+            <button id="soundToggleBtn" onclick="toggleSound()" class="btn-red-outline px-3 py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-lg cursor-pointer" title="Bật/Tắt nhạc nền & hiệu ứng">
+                <span id="soundIcon" class="text-base">🔊</span>
+                <span id="soundLabel" class="hidden sm:inline">Âm thanh: Bật</span>
+            </button>
+
+            <!-- Nút Reset / Nhập tên giáo viên -->
+            <button onclick="openEditModal()" class="btn-gold px-3.5 py-2 rounded-full text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
+                <span>✏️</span>
+                <span>Nhập / Reset Tên</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Khu vực nội dung chính -->
+    <main class="flex-1 w-full max-w-5xl px-4 flex flex-col items-center justify-center text-center z-20 my-auto py-2">
+        
+        <!-- Tiêu đề chính -->
+        <div class="mb-2 sm:mb-4">
+            <h1 class="font-title text-2xl sm:text-4xl md:text-5xl font-extrabold gold-text tracking-wide leading-tight">
+                VÒNG QUAY TRI ÂN THẦY CÔ
+            </h1>
+            <p class="text-yellow-100/90 text-xs sm:text-base mt-1 max-w-xl mx-auto font-medium">
+                Nhấn <span class="text-yellow-300 font-bold">"QUAY"</span> ở tâm vòng tròn để gửi tặng những lời chúc 20/11 ý nghĩa nhất đến quý Thầy Cô!
+            </p>
+        </div>
+
+        <!-- Vòng quay bánh xe 12 ô -->
+        <div class="wheel-stage" id="wheelStage">
+            <div class="wheel-glow"></div>
+
+            <!-- Mũi tên vàng kim chỉ định -->
+            <div class="wheel-pointer" id="wheelPointer">
+                <svg viewBox="0 0 44 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 52L4 16C4 7.16344 12.0589 2 22 2C31.9411 2 40 7.16344 40 16L22 52Z" fill="url(#pointerGrad)" stroke="#78350F" stroke-width="2.5"/>
+                    <circle cx="22" cy="15" r="6" fill="#DC2626" stroke="#FEF08A" stroke-width="2"/>
+                    <defs>
+                        <linearGradient id="pointerGrad" x1="4" y1="2" x2="40" y2="52" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FEF9C3"/>
+                            <stop offset="45%" stop-color="#FACC15"/>
+                            <stop offset="100%" stop-color="#A16207"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <!-- Viền vàng kim & đèn LED -->
+            <div class="wheel-outer-rim">
+                <div class="rim-leds" id="rimLeds"></div>
+                <canvas id="wheelCanvas"></canvas>
+            </div>
+
+            <!-- Tâm vòng quay màu đỏ có nút Quay -->
+            <button id="spinBtn" onclick="spinWheel()" class="center-spin-btn" aria-label="Quay vòng quay">
+                <span class="text-xs sm:text-sm tracking-wider leading-none">QUAY</span>
+                <span class="text-[10px] sm:text-xs text-yellow-200 mt-0.5 font-semibold">20/11</span>
+            </button>
+        </div>
+
+        <!-- Hướng dẫn nhanh bên dưới -->
+        <div class="mt-3 sm:mt-4 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-yellow-200/85">
+            <span class="bg-red-950/70 border border-yellow-500/40 px-3 py-1 rounded-full">
+                ✨ 12 Ô Tên Thầy Cô
+            </span>
+            <span class="bg-red-950/70 border border-yellow-500/40 px-3 py-1 rounded-full">
+                💌 Lời Chúc Riêng Biệt
+            </span>
+            <span class="bg-red-950/70 border border-yellow-500/40 px-3 py-1 rounded-full hidden sm:inline-block">
+                🌸 Di chuyển chuột để rải hoa
+            </span>
+        </div>
+    </main>
+
+    <!-- Footer nhỏ gọn -->
+    <footer class="w-full text-center py-2 px-4 text-[11px] sm:text-xs text-yellow-200/60 z-20">
+        Kính chúc quý Thầy Cô luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp trồng người!
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL LÁ THƯ LỜI CHÚC KHI QUAY TRÚNG TÊN GIÁO VIÊN                    -->
+    <!-- ===================================================================== -->
+    <div id="letterModal" class="letter-backdrop">
+        <div class="letter-card">
+            <!-- Các sticker bó hoa, quyển sách, vở, cây bút trang trí xung quanh khung lá thư -->
+            <div class="letter-sticker -top-5 -left-4 text-4xl sm:text-5xl" style="animation-delay: 0s;">💐</div>
+            <div class="letter-sticker -top-5 -right-4 text-4xl sm:text-5xl" style="animation-delay: 0.4s;">📚</div>
+            <div class="letter-sticker top-1/3 -left-4 text-3xl sm:text-4xl" style="animation-delay: 0.8s;">✒️</div>
+            <div class="letter-sticker top-1/2 -right-4 text-3xl sm:text-4xl" style="animation-delay: 1.2s;">🌸</div>
+            <div class="letter-sticker -bottom-4 -left-3 text-4xl sm:text-5xl" style="animation-delay: 0.5s;">📖</div>
+            <div class="letter-sticker -bottom-4 -right-3 text-4xl sm:text-5xl" style="animation-delay: 0.9s;">🌹</div>
+
+            <div class="letter-inner-border text-center">
+                <!-- Sticker cụm trang trí đầu thư -->
+                <div class="flex items-center justify-center gap-2 text-2xl sm:text-3xl mb-1">
+                    <span>🌷</span><span>📒</span><span>💐</span><span>🖊️</span><span>🌺</span>
+                </div>
+
+                <p class="text-xs sm:text-sm uppercase tracking-widest text-red-700 font-bold">
+                    Thư Chúc Mừng Ngày Nhà Giáo Việt Nam 20/11
+                </p>
+
+                <h2 class="font-handwriting text-3xl sm:text-4xl md:text-5xl text-red-700 font-bold mt-2 mb-3 drop-shadow-sm">
+                    Kính gửi: <span id="winnerTeacherName" class="text-amber-700 underline decoration-yellow-500 decoration-wavy">Thầy Nguyễn Văn An</span>
+                </h2>
+
+                <!-- Nội dung lời chúc riêng biệt -->
+                <div class="bg-amber-50/90 border border-amber-300/80 rounded-xl p-4 sm:p-5 my-3 shadow-inner text-left relative">
+                    <span class="text-3xl text-amber-400/50 font-serif absolute top-1 left-2">“</span>
+                    <p id="wishContent" class="text-stone-800 text-sm sm:text-base md:text-lg leading-relaxed font-medium indent-4 relative z-10">
+                        Nhân ngày Nhà giáo Việt Nam 20/11, kính chúc Thầy/Cô luôn dồi dào sức khỏe, tràn đầy nhiệt huyết và niềm vui để tiếp tục chèo lái những chuyến đò tri thức cập bến tương lai!
+                    </p>
+                    <span class="text-3xl text-amber-400/50 font-serif absolute bottom-0 right-3">”</span>
+                </div>
+
+                <!-- Hàng sticker bó hoa, sách vở, bút dưới lời chúc -->
+                <div class="flex items-center justify-center gap-3 my-3 text-xl sm:text-2xl bg-red-100/70 py-1.5 px-4 rounded-full inline-flex border border-red-200">
+                    <span title="Bó hoa tươi">💐</span>
+                    <span title="Sách tri thức">📚</span>
+                    <span title="Quyển vở">📓</span>
+                    <span title="Cây bút">🖋️</span>
+                    <span title="Hoa hướng dương">🌻</span>
+                    <span title="Trái tim tri ân">❤️</span>
+                </div>
+
+                <p class="font-handwriting text-xl sm:text-2xl text-red-800 mt-1">
+                    Trân trọng & Tri ân sâu sắc!
+                </p>
+
+                <!-- Nút đóng lá thư và quay tiếp -->
+                <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="nextWishForSameTeacher()" class="px-4 py-2.5 rounded-full bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold text-xs sm:text-sm border border-amber-400 transition cursor-pointer flex items-center gap-1.5">
+                        <span>💌</span> Đổi lời chúc khác
+                    </button>
+                    <button onclick="closeLetterModal()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-yellow-200 font-bold text-xs sm:text-sm border-2 border-yellow-400 shadow-lg transition cursor-pointer flex items-center gap-1.5">
+                        <span>🎡</span> Quay Tiếp Thầy Cô Khác
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL NHẬP / RESET DANH SÁCH 12 TÊN GIÁO VIÊN                         -->
+    <!-- ===================================================================== -->
+    <div id="editModal" class="letter-backdrop" style="z-index: 50;">
+        <div class="bg-red-950 border-2 border-yellow-400 rounded-2xl w-full max-w-lg p-5 sm:p-6 shadow-2xl text-yellow-100 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-yellow-500/30 pb-3 mb-3">
+                <h3 class="font-title text-xl sm:text-2xl font-bold text-yellow-300 flex items-center gap-2">
+                    <span>📝</span> Danh Sách 12 Thầy Cô
+                </h3>
+                <button onclick="closeEditModal()" class="text-yellow-300 hover:text-white text-2xl leading-none cursor-pointer px-2">&times;</button>
+            </div>
+
+            <p class="text-xs sm:text-sm text-yellow-200/80 mb-3">
+                Nhập tên của 12 Thầy/Cô vào các ô bên dưới (mỗi ô tương ứng với 1 phần trên vòng quay):
+            </p>
+
+            <!-- Lưới 12 ô nhập tên -->
+            <div id="teacherInputsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 overflow-y-auto pr-1 flex-1 my-1">
+                <!-- Tạo bằng JS -->
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-4 mt-3 border-t border-yellow-500/30">
+                <div class="flex gap-2">
+                    <button onclick="clearAllNames()" class="px-3 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-yellow-200 text-xs font-semibold border border-yellow-500/40 cursor-pointer">
+                        🗑️ Xóa trắng
+                    </button>
+                    <button onclick="resetDefaultNames()" class="px-3 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-yellow-200 text-xs font-semibold border border-yellow-500/40 cursor-pointer">
+                        🔄 Tên mẫu
+                    </button>
+                </div>
+                <button onclick="saveTeacherNames()" class="btn-gold px-5 py-2 rounded-lg text-xs sm:text-sm cursor-pointer">
+                    ✅ Lưu & Cập Nhật Vòng Quay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hộp thông báo nhỏ (thay thế alert) -->
+    <div id="toastMsg" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-yellow-400 text-red-950 font-bold px-5 py-2.5 rounded-full shadow-2xl border-2 border-red-800 text-xs sm:text-sm z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-4">
+        Đã cập nhật danh sách giáo viên!
+    </div>
+
+    <!-- Trình phát file MP3 "Người Gieo Mầm Xanh" tự động lặp lại khi mở lá thư -->
+    <audio id="letterBgmAudio" src="snaptik.vn_7574314255961296149.mp3" preload="auto" loop></audio>
+
+    <script>
+        /* =========================================================================
+           1. DỮ LIỆU TÊN GIÁO VIÊN & KHO 20 LỜI CHÚC 20/11 ĐỘC ĐÁO KHÔNG TRÙNG LẶP
+           ========================================================================= */
+        const DEFAULT_TEACHERS = [
+            "Thầy Nguyễn Văn An",
+            "Cô Trần Thị Bích",
+            "Thầy Lê Hoàng Nam",
+            "Cô Phạm Minh Thư",
+            "Thầy Vũ Đức Trọng",
+            "Cô Đỗ Thanh Hương",
+            "Thầy Bùi Quốc Tuấn",
+            "Cô Hoàng Ngọc Lan",
+            "Thầy Đặng Minh Quân",
+            "Cô Ngô Phương Thảo",
+            "Thầy Trịnh Xuân Phúc",
+            "Cô Lý Mai Anh"
+        ];
+
+        let teachers = [...DEFAULT_TEACHERS];
+
+        // Kho 20 lời chúc 20/11 phong phú, sâu sắc và không trùng lặp
+        const WISHES_DATABASE = [
+            "Nhân ngày Nhà giáo Việt Nam 20/11, kính chúc Thầy/Cô luôn dồi dào sức khỏe, giữ mãi ngọn lửa nhiệt huyết trong tim để tiếp tục dìu dắt bao thế hệ học trò chạm tới ước mơ!",
+            "Dưới ánh mặt trời không có nghề nào cao quý hơn nghề dạy học. Kính chúc Thầy/Cô một ngày 20/11 thật nhiều niềm vui, hạnh phúc bên gia đình và những lứa học trò thân yêu!",
+            "Cảm ơn Thầy/Cô đã kiên nhẫn uốn nắn từng nét chữ, dạy cho chúng em những bài học làm người quý giá. Kính chúc Thầy/Cô luôn bình an, tươi trẻ và thành công rực rỡ!",
+            "Mỗi trang sách mở ra là cả một bầu trời tri thức mà Thầy/Cô đã tận tụy trao truyền. Nhân dịp 20/11, kính chúc Thầy/Cô vạn sự như ý, công tác tốt và luôn rạng rỡ nụ cười!",
+            "Dẫu mai này đi khắp bốn phương trời, chúng em vẫn luôn khắc ghi công ơn dạy dỗ của Thầy/Cô. Chúc mừng ngày Nhà giáo Việt Nam 20/11 thật ấm áp và tràn đầy hoa tươi!",
+            "Kính chúc Thầy/Cô có thật nhiều sức khỏe, tâm hồn luôn phơi phới yêu đời để mỗi ngày đứng trên bục giảng đều là một ngày tràn ngập niềm vui và tự hào!",
+            "Tri ân người lái đò thầm lặng đã đưa bao thế hệ cập bến tương lai. Chúc Thầy/Cô ngày 20/11 nhận được thật nhiều lời chúc tốt đẹp, những bó hoa tươi thắm và tình cảm chân thành nhất!",
+            "Thầy/Cô không chỉ dạy chúng em kiến thức mà còn truyền cảm hứng sống đẹp, sống có ích. Kính chúc Thầy/Cô luôn mạnh khỏe, hạnh phúc viên mãn và gặt hái nhiều thành tựu mới!",
+            "Một chữ cũng là thầy, nửa chữ cũng là thầy. Nhân ngày Hiến chương Nhà giáo 20/11, xin gửi tới Thầy/Cô lời tri ân sâu sắc nhất cùng lời chúc an khang, thịnh vượng!",
+            "Chúc mừng ngày 20/11! Kính chúc Thầy/Cô luôn vững tay chèo trên dòng sông tri thức, đào tạo nên nhiều nhân tài ưu tú cho đất nước và luôn được học trò kính yêu!",
+            "Những bài giảng tâm huyết của Thầy/Cô chính là hành trang quý báu nhất theo chúng em suốt cuộc đời. Kính chúc Thầy/Cô ngày lễ 20/11 thật nhiều sức khỏe và niềm vui bất tận!",
+            "Nhân dịp 20/11, kính chúc Thầy/Cô luôn tràn đầy năng lượng tích cực, gia đình hạnh phúc, mọi dự định đều thành công tốt đẹp và mãi là tấm gương sáng cho chúng em noi theo!",
+            "Bụi phấn rơi trên tóc Thầy/Cô nhưng lại thắp sáng tương lai cho bao thế hệ học sinh. Xin kính chúc Thầy/Cô ngày Nhà giáo Việt Nam thật nhiều sức khỏe, bình an và hạnh phúc!",
+            "Không có món quà nào sánh bằng sự tận tâm và tình yêu thương mà Thầy/Cô đã dành cho học trò. Kính chúc Thầy/Cô một mùa 20/11 đong đầy yêu thương và kỷ niệm đẹp!",
+            "Kính chúc Thầy/Cô luôn giữ được sự minh mẫn, nhiệt thành và niềm đam mê bất tận với sự nghiệp trồng người cao quý. Chúc mừng Ngày Nhà giáo Việt Nam 20/11!",
+            "Mỗi lời khuyên bảo của Thầy/Cô đều là ngọn hải đăng soi đường cho chúng em bước tới. Nhân ngày 20/11, kính chúc Thầy/Cô sức khỏe dồi dào, vạn sự cát tường!",
+            "Chúc Thầy/Cô ngày 20/11 thật rạng rỡ như những đóa hoa hướng dương, luôn vui vẻ, lạc quan và tự hào về những thế hệ học trò trưởng thành từ mái trường thân yêu!",
+            "Cảm ơn Thầy/Cô vì đã luôn bao dung, khích lệ và tin tưởng vào khả năng của chúng em. Kính chúc Thầy/Cô có một ngày lễ Hiến chương thật trọn vẹn và ý nghĩa!",
+            "Nhân ngày 20/11, kính gửi đến Thầy/Cô ngàn lời chúc tốt đẹp nhất: Sức khỏe vô biên, niềm vui ngập tràn, gia đạo bình an và sự nghiệp giáo dục mãi thăng hoa!",
+            "Thời gian có thể làm phai mờ nhiều thứ, nhưng công ơn dạy dỗ của Thầy/Cô sẽ mãi vẹn nguyên trong tim chúng em. Kính chúc Thầy/Cô ngày 20/11 thật hạnh phúc!"
+        ];
+
+        let usedWishIndices = [];
+        let currentWinnerName = "";
+
+        function getUniqueWish() {
+            if (usedWishIndices.length >= WISHES_DATABASE.length) {
+                usedWishIndices = [];
+            }
+            let available = [];
+            for (let i = 0; i < WISHES_DATABASE.length; i++) {
+                if (!usedWishIndices.includes(i)) available.push(i);
+            }
+            const randomIndex = available[Math.floor(Math.random() * available.length)];
+            usedWishIndices.push(randomIndex);
+            return WISHES_DATABASE[randomIndex];
+        }
+
+        /* =========================================================================
+           2. HỆ THỐNG ÂM THANH TỔNG HỢP (WEB AUDIO API)
+           ========================================================================= */
+        let audioCtx = null;
+        let isSoundEnabled = true;
+        let bgmInterval = null;
+        let currentMusicMode = 'none';
+        let noteStep = 0;
+        const letterBgmAudio = document.getElementById('letterBgmAudio');
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    try { audioCtx = new AudioContext(); } catch (e) { audioCtx = null; }
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                // Resume from the user's gesture; browsers may suspend Web Audio.
+                return audioCtx.resume()
+                    .then(() => audioCtx.state === 'running')
+                    .catch(() => false);
+            }
+            return Promise.resolve(!!audioCtx && audioCtx.state === 'running');
+        }
+
+        function toggleSound() {
+            const audioReady = initAudio();
+            isSoundEnabled = !isSoundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const label = document.getElementById('soundLabel');
+            if (isSoundEnabled) {
+                icon.textContent = '🔊';
+                label.textContent = 'Âm thanh: Bật';
+                const modeToPlay = document.getElementById('letterModal').classList.contains('active') ? 'letter' : 'wheel';
+                startMusic(modeToPlay, true);
+                // Audible confirmation that sound has been enabled.
+                audioReady.then((ready) => {
+                    if (ready && isSoundEnabled) playSynthNote(880, 0.18, 'sine', 0.12);
+                });
+                showToast('Đã bật âm thanh & nhạc nền');
+            } else {
+                icon.textContent = '🔇';
+                label.textContent = 'Âm thanh: Tắt';
+                stopMusicLoop();
+                showToast('Đã tắt âm thanh');
+            }
+        }
+
+        function stopMusicLoop() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+            if (letterBgmAudio && !letterBgmAudio.paused) {
+                letterBgmAudio.pause();
+                letterBgmAudio.currentTime = 0;
+            }
+        }
+
+        function playSynthNote(freq, duration, type = 'triangle', volume = 0.08, delay = 0) {
+            if (!isSoundEnabled || !audioCtx || freq <= 0) return;
+            try {
+                const now = audioCtx.currentTime + delay;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(volume, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + duration + 0.02);
+            } catch (e) {}
+        }
+
+        function startMusic(mode, forceRestart = false) {
+            if (!isSoundEnabled) return;
+            const audioReady = initAudio();
+            if (!forceRestart && currentMusicMode === mode && (bgmInterval || (mode === 'letter' && letterBgmAudio && !letterBgmAudio.paused))) {
+                return;
+            }
+            stopMusicLoop();
+            currentMusicMode = mode;
+            noteStep = 0;
+
+            if (mode === 'wheel') {
+                // Nhạc nền vòng quay vui nhộn, rộn ràng lễ hội
+                const wheelMelody = [
+                    [523.25, 261.63], [659.25, 0], [783.99, 392.00], [659.25, 0],
+                    [880.00, 440.00], [783.99, 0], [659.25, 392.00], [587.33, 0],
+                    [698.46, 349.23], [880.00, 0], [783.99, 392.00], [659.25, 0],
+                    [587.33, 293.66], [659.25, 0], [523.25, 261.63], [0, 0]
+                ];
+                bgmInterval = setInterval(() => {
+                    if (!isSoundEnabled || currentMusicMode !== 'wheel') return;
+                    if (!audioCtx || audioCtx.state !== 'running') return;
+                    const [mel, bass] = wheelMelody[noteStep % wheelMelody.length];
+                    if (mel > 0) playSynthNote(mel, 0.24, 'triangle', 0.065);
+                    if (bass > 0) playSynthNote(bass, 0.35, 'sine', 0.05);
+                    noteStep++;
+                }, 260);
+                // If Web Audio is unavailable or the browser refuses to resume it,
+                // use the bundled MP3 so the page still has audible background music.
+                audioReady.then((ready) => {
+                    if (!ready && isSoundEnabled && currentMusicMode === 'wheel' && letterBgmAudio) {
+                        letterBgmAudio.currentTime = 0;
+                        letterBgmAudio.volume = 0.65;
+                        letterBgmAudio.play().catch(() => {});
+                    }
+                });
+            } else if (mode === 'letter') {
+                // Tự động phát và lặp lại file MP3 snaptik.vn_7574314255961296149.mp3 ngay khi lá thư mở ra
+                if (letterBgmAudio) {
+                    letterBgmAudio.currentTime = 0;
+                    letterBgmAudio.volume = 0.9;
+                    const playPromise = letterBgmAudio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            startFallbackLetterMelody();
+                        });
+                        return;
+                    }
+                }
+                startFallbackLetterMelody();
+            }
+        }
+
+        function startFallbackLetterMelody() {
+            const N = {
+                C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
+                C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.00
+            };
+            const songMelody = [
+                [N.G4, N.C4], [N.E5, 0], [N.D5, N.G4], [N.C5, 0],
+                [N.A4, N.A4 / 2], [N.C5, 0], [N.D5, N.E4], [N.E5, 0],
+                [N.D5, N.F4], [N.C5, 0], [N.D5, N.G4], [0, 0],
+                [N.G4, N.C4], [N.E5, 0], [N.E5, N.G4], [N.F5, 0],
+                [N.G5, N.A4 / 2], [N.E5, 0], [N.C5, N.E4], [0, 0],
+                [N.A4, N.F4], [N.D5, 0], [N.C5, N.C4], [0, 0],
+                [N.G4, N.F4], [N.A4, 0], [N.C5, N.A4 / 2], [N.D5, 0],
+                [N.E5, N.G4], [N.D5, 0], [N.C5, N.E4], [N.D5, 0],
+                [N.E5, N.A4 / 2], [N.G5, 0], [N.A5, N.E4], [N.G5, 0],
+                [N.E5, N.F4], [N.D5, 0], [N.C5, N.C4], [N.D5, 0],
+                [N.E5, N.F4], [N.D5, 0], [N.C5, N.G4], [N.A4, 0],
+                [N.C5, N.C4], [0, N.G4], [0, N.C5], [0, 0]
+            ];
+
+            bgmInterval = setInterval(() => {
+                if (!isSoundEnabled || currentMusicMode !== 'letter') return;
+                if (!audioCtx || audioCtx.state !== 'running') return;
+                const [mel, bass] = songMelody[noteStep % songMelody.length];
+                if (mel > 0) {
+                    playSynthNote(mel, 0.55, 'sine', 0.085);
+                    playSynthNote(mel * 2, 0.25, 'triangle', 0.02);
+                }
+                if (bass > 0) {
+                    playSynthNote(bass, 0.75, 'triangle', 0.05);
+                }
+                noteStep++;
+            }, 340);
+        }
+
+        function playTickSound() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            playSynthNote(950, 0.045, 'triangle', 0.09);
+        }
+
+        function playWinFanfare() {
+            if (!isSoundEnabled) return;
+            initAudio();
+            const fanfare = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+            fanfare.forEach((f, idx) => {
+                playSynthNote(f, 0.35, 'triangle', 0.12, idx * 0.09);
+            });
+        }
+
+        document.body.addEventListener('pointerdown', () => {
+            if (isSoundEnabled && currentMusicMode === 'none') {
+                startMusic('wheel');
+                initAudio().then((ready) => {
+                    if (ready && isSoundEnabled) playSynthNote(880, 0.18, 'sine', 0.12);
+                });
+            }
+        }, { once: true });
+
+        /* =========================================================================
+           3. VẼ VÒNG QUAY 12 Ô ĐỎ - VÀNG KIM & HIỆU ỨNG QUAY
+           ========================================================================= */
+        const wheelCanvas = document.getElementById('wheelCanvas');
+        const wheelCtx = wheelCanvas.getContext('2d');
+        const wheelStage = document.getElementById('wheelStage');
+        const wheelPointer = document.getElementById('wheelPointer');
+        const spinBtn = document.getElementById('spinBtn');
+
+        let currentRotation = 0;
+        let isSpinning = false;
+        let lastTickIndex = -1;
+
+        function createRimLeds() {
+            const container = document.getElementById('rimLeds');
+            container.innerHTML = '';
+            const totalLeds = 24;
+            for (let i = 0; i < totalLeds; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'led-dot';
+                const angle = (i * 360) / totalLeds;
+                dot.style.transform = `rotate(${angle}deg) translate(calc(min(44vw, 230px) - 7px)) translate(-50%, -50%)`;
+                container.appendChild(dot);
+            }
+        }
+
+        function resizeWheelCanvas() {
+            const rect = wheelCanvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            wheelCanvas.width = rect.width * dpr;
+            wheelCanvas.height = rect.height * dpr;
+            drawWheel();
+        }
+
+        function drawWheel() {
+            const w = wheelCanvas.width;
+            const h = wheelCanvas.height;
+            if (w === 0 || h === 0) return;
+
+            const cx = w / 2;
+            const cy = h / 2;
+            const radius = Math.min(cx, cy);
+            const sliceCount = 12;
+            const sliceAngle = (Math.PI * 2) / sliceCount;
+
+            wheelCtx.clearRect(0, 0, w, h);
+            wheelCtx.save();
+            wheelCtx.translate(cx, cy);
+            wheelCtx.rotate(currentRotation);
+
+            for (let i = 0; i < sliceCount; i++) {
+                const startAngle = i * sliceAngle;
+                const endAngle = startAngle + sliceAngle;
+
+                wheelCtx.beginPath();
+                wheelCtx.moveTo(0, 0);
+                wheelCtx.arc(0, 0, radius, startAngle, endAngle);
+                wheelCtx.closePath();
+
+                const grad = wheelCtx.createRadialGradient(0, 0, radius * 0.15, 0, 0, radius);
+                if (i % 2 === 0) {
+                    grad.addColorStop(0, '#991b1b');
+                    grad.addColorStop(0.65, '#dc2626');
+                    grad.addColorStop(1, '#7f1d1d');
+                } else {
+                    grad.addColorStop(0, '#7f1d1d');
+                    grad.addColorStop(0.65, '#b91c1c');
+                    grad.addColorStop(1, '#450a0a');
+                }
+                wheelCtx.fillStyle = grad;
+                wheelCtx.fill();
+
+                wheelCtx.lineWidth = Math.max(2, radius * 0.012);
+                wheelCtx.strokeStyle = '#facc15';
+                wheelCtx.stroke();
+
+                wheelCtx.save();
+                wheelCtx.rotate(startAngle + sliceAngle / 2);
+                wheelCtx.textAlign = 'right';
+                wheelCtx.textBaseline = 'middle';
+                wheelCtx.fillStyle = '#fef9c3';
+                wheelCtx.shadowColor = 'rgba(0, 0, 0, 0.85)';
+                wheelCtx.shadowBlur = 4;
+
+                const fontSize = Math.max(11, Math.floor(radius * 0.068));
+                wheelCtx.font = `700 ${fontSize}px "Plus Jakarta Sans", sans-serif`;
+
+                let name = teachers[i] || `Giáo viên ${i + 1}`;
+                if (name.length > 18) name = name.slice(0, 16) + '…';
+
+                wheelCtx.fillText(name, radius * 0.88, 0);
+                wheelCtx.restore();
+            }
+
+            wheelCtx.beginPath();
+            wheelCtx.arc(0, 0, radius - 2, 0, Math.PI * 2);
+            wheelCtx.lineWidth = Math.max(4, radius * 0.02);
+            wheelCtx.strokeStyle = '#fde047';
+            wheelCtx.stroke();
+
+            wheelCtx.restore();
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            initAudio();
+            if (isSoundEnabled && currentMusicMode !== 'wheel') {
+                startMusic('wheel', true);
+            }
+
+            isSpinning = true;
+            spinBtn.disabled = true;
+            wheelStage.classList.add('spinning');
+
+            const sliceCount = 12;
+            const sliceAngle = (Math.PI * 2) / sliceCount;
+            const extraSpins = 6 + Math.floor(Math.random() * 4);
+            const randomOffset = Math.random() * Math.PI * 2;
+            const startRotation = currentRotation;
+            const targetRotation = startRotation + extraSpins * Math.PI * 2 + randomOffset;
+            const duration = 5200;
+            const startTime = performance.now();
+
+            function animateSpin(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 4);
+
+                currentRotation = startRotation + (targetRotation - startRotation) * easeOut;
+                drawWheel();
+
+                const pointerAngle = ((-Math.PI / 2 - currentRotation) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+                const currentSlice = Math.floor(pointerAngle / sliceAngle);
+                if (currentSlice !== lastTickIndex) {
+                    lastTickIndex = currentSlice;
+                    playTickSound();
+                    wheelPointer.classList.remove('tick');
+                    void wheelPointer.offsetWidth;
+                    wheelPointer.classList.add('tick');
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                    wheelStage.classList.remove('spinning');
+                    const winnerName = teachers[currentSlice] || `Thầy/Cô số ${currentSlice + 1}`;
+                    onWheelWin(winnerName);
+                }
+            }
+
+            requestAnimationFrame(animateSpin);
+        }
+
+        function onWheelWin(teacherName) {
+            currentWinnerName = teacherName;
+            document.getElementById('winnerTeacherName').textContent = teacherName;
+            document.getElementById('wishContent').textContent = getUniqueWish();
+
+            playWinFanfare();
+            setFallingMode('letter');
+
+            if (isSoundEnabled) {
+                startMusic('letter', true);
+            }
+
+            document.getElementById('letterModal').classList.add('active');
+        }
+
+        function nextWishForSameTeacher() {
+            document.getElementById('wishContent').textContent = getUniqueWish();
+            playTickSound();
+        }
+
+        function closeLetterModal() {
+            document.getElementById('letterModal').classList.remove('active');
+            setFallingMode('wheel');
+            if (isSoundEnabled) {
+                startMusic('wheel', true);
+            }
+        }
+
+        /* =========================================================================
+           4. MODAL NHẬP / RESET DANH SÁCH 12 TÊN GIÁO VIÊN
+           ========================================================================= */
+        function openEditModal() {
+            const container = document.getElementById('teacherInputsContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 12; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex items-center gap-2 bg-red-900/60 border border-yellow-500/30 rounded-lg px-2.5 py-1.5';
+                wrapper.innerHTML = `
+                    <span class="text-xs font-bold text-yellow-400 w-5 text-right">${i + 1}.</span>
+                    <input type="text" id="teacherInput_${i}" value="${(teachers[i] || '').replace(/"/g, '&quot;')}" 
+                        placeholder="Nhập tên Thầy/Cô ${i + 1}..." 
+                        class="bg-transparent text-white text-xs sm:text-sm w-full focus:outline-none placeholder-yellow-200/40" />
+                `;
+                container.appendChild(wrapper);
+            }
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        function clearAllNames() {
+            for (let i = 0; i < 12; i++) {
+                const input = document.getElementById(`teacherInput_${i}`);
+                if (input) input.value = '';
+            }
+            showToast('Đã xóa trắng các ô nhập tên!');
+        }
+
+        function resetDefaultNames() {
+            for (let i = 0; i < 12; i++) {
+                const input = document.getElementById(`teacherInput_${i}`);
+                if (input) input.value = DEFAULT_TEACHERS[i];
+            }
+            showToast('Đã khôi phục 12 tên mẫu!');
+        }
+
+        function saveTeacherNames() {
+            const updated = [];
+            for (let i = 0; i < 12; i++) {
+                const val = document.getElementById(`teacherInput_${i}`).value.trim();
+                updated.push(val || `Thầy/Cô ${i + 1}`);
+            }
+            teachers = updated;
+            drawWheel();
+            closeEditModal();
+            showToast('Đã cập nhật vòng quay 12 Thầy Cô!');
+        }
+
+        let toastTimer = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+            }, 2400);
+        }
+
+        /* =========================================================================
+           5. HIỆU ỨNG STICKER RƠI & HOA BAY THEO CHUỘT SIÊU MƯỢT (GPU + OFFSCREEN CACHE)
+           ========================================================================= */
+        const fallingCanvas = document.getElementById('fallingCanvas');
+        const fallingCtx = fallingCanvas.getContext('2d');
+        const trailCanvas = document.getElementById('trail-canvas');
+        const trailCtx = trailCanvas.getContext('2d');
+
+        let fallingMode = 'wheel';
+        const WHEEL_STICKERS = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌼'];
+        const LETTER_STICKERS = ['📚', '📖', '📓', '💐', '🌷', '✒️'];
+
+        const spriteCache = new Map();
+        function getEmojiSprite(emoji, size = 48) {
+            const key = `${emoji}_${size}`;
+            if (spriteCache.has(key)) return spriteCache.get(key);
+            const off = document.createElement('canvas');
+            off.width = size * 2;
+            off.height = size * 2;
+            const ctx = off.getContext('2d');
+            ctx.font = `${size}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(emoji, size, size);
+            spriteCache.set(key, off);
+            return off;
+        }
+
+        const flowerPalette = [
+            ['#ff4d6d', '#ff8fa3', '#ffd166'],
+            ['#f72585', '#ff70a6', '#ffe66d'],
+            ['#ff9f1c', '#ffbf69', '#ffffff'],
+            ['#fb5607', '#ffbe0b', '#fff3b0'],
+            ['#e0aaff', '#c77dff', '#ffd166']
+        ];
+        const flowerSprites = flowerPalette.map(([petal, inner, center]) => {
+            const size = 64;
+            const off = document.createElement('canvas');
+            off.width = size;
+            off.height = size;
+            const ctx = off.getContext('2d');
+            ctx.translate(size / 2, size / 2);
+            for (let i = 0; i < 5; i++) {
+                ctx.save();
+                ctx.rotate((i * Math.PI * 2) / 5);
+                ctx.beginPath();
+                ctx.ellipse(0, -13, 7, 13, 0, 0, Math.PI * 2);
+                ctx.fillStyle = petal;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(0, -10, 3.5, 7, 0, 0, Math.PI * 2);
+                ctx.fillStyle = inner;
+                ctx.fill();
+                ctx.restore();
+            }
+            ctx.beginPath();
+            ctx.arc(0, 0, 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = center;
+            ctx.fill();
+            return off;
+        });
+
+        const fallingItems = [];
+        function initFallingItems() {
+            fallingItems.length = 0;
+            const count = window.innerWidth < 640 ? 18 : 30;
+            for (let i = 0; i < count; i++) {
+                fallingItems.push(createFallingItem(true));
+            }
+        }
+
+        function createFallingItem(randomY = false) {
+            const list = fallingMode === 'wheel' ? WHEEL_STICKERS : LETTER_STICKERS;
+            const emoji = list[Math.floor(Math.random() * list.length)];
+            return {
+                x: Math.random() * window.innerWidth,
+                y: randomY ? Math.random() * window.innerHeight : -40,
+                size: 22 + Math.random() * 14,
+                speedY: 45 + Math.random() * 55,
+                swayAmp: 18 + Math.random() * 24,
+                swayFreq: 1.2 + Math.random() * 1.5,
+                phase: Math.random() * Math.PI * 2,
+                rotation: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 1.8,
+                sprite: getEmojiSprite(emoji, 44)
+            };
+        }
+
+        function setFallingMode(mode) {
+            fallingMode = mode;
+            const list = mode === 'wheel' ? WHEEL_STICKERS : LETTER_STICKERS;
+            for (let i = 0; i < fallingItems.length; i++) {
+                const emoji = list[Math.floor(Math.random() * list.length)];
+                fallingItems[i].sprite = getEmojiSprite(emoji, 44);
+            }
+        }
+
+        const POOL_SIZE = 220;
+        const trailPool = Array.from({ length: POOL_SIZE }, () => ({
+            active: false, x: 0, y: 0, vx: 0, vy: 0,
+            size: 20, alpha: 1, life: 0, maxLife: 1,
+            rotation: 0, rotSpeed: 0, sprite: flowerSprites[0]
+        }));
+        let poolCursor = 0;
+
+        function spawnTrailFlower(x, y) {
+            const p = trailPool[poolCursor];
+            poolCursor = (poolCursor + 1) % POOL_SIZE;
+            p.active = true;
+            p.x = x + (Math.random() - 0.5) * 12;
+            p.y = y + (Math.random() - 0.5) * 12;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 25 + Math.random() * 55;
+            p.vx = Math.cos(angle) * speed;
+            p.vy = Math.sin(angle) * speed - 25;
+            p.size = 18 + Math.random() * 14;
+            p.life = 0;
+            p.maxLife = 0.75 + Math.random() * 0.45;
+            p.rotation = Math.random() * Math.PI * 2;
+            p.rotSpeed = (Math.random() - 0.5) * 4;
+            p.sprite = flowerSprites[Math.floor(Math.random() * flowerSprites.length)];
+        }
+
+        let lastPointerX = -999;
+        let lastPointerY = -999;
+        function handlePointerMove(x, y) {
+            const dx = x - lastPointerX;
+            const dy = y - lastPointerY;
+            const dist = Math.hypot(dx, dy);
+            if (dist >= 16) {
+                spawnTrailFlower(x, y);
+                if (dist > 45) {
+                    spawnTrailFlower((x + lastPointerX) * 0.5, (y + lastPointerY) * 0.5);
+                }
+                lastPointerX = x;
+                lastPointerY = y;
+            }
+        }
+
+        window.addEventListener('pointermove', (e) => handlePointerMove(e.clientX, e.clientY), { passive: true });
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches[0]) {
+                handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
+        function resizeEffectCanvases() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            fallingCanvas.width = w * dpr;
+            fallingCanvas.height = h * dpr;
+            fallingCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            trailCanvas.width = w * dpr;
+            trailCanvas.height = h * dpr;
+            trailCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        let lastFrameTime = performance.now();
+        function renderEffectsLoop(now) {
+            const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
+            lastFrameTime = now;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            fallingCtx.clearRect(0, 0, w, h);
+            for (let i = 0; i < fallingItems.length; i++) {
+                const item = fallingItems[i];
+                item.y += item.speedY * dt;
+                item.phase += item.swayFreq * dt;
+                item.rotation += item.rotSpeed * dt;
+                const drawX = item.x + Math.sin(item.phase) * item.swayAmp;
+
+                if (item.y > h + 40) {
+                    Object.assign(item, createFallingItem(false));
+                }
+
+                fallingCtx.save();
+                fallingCtx.translate(drawX, item.y);
+                fallingCtx.rotate(item.rotation);
+                fallingCtx.drawImage(item.sprite, -item.size / 2, -item.size / 2, item.size, item.size);
+                fallingCtx.restore();
+            }
+
+            trailCtx.clearRect(0, 0, w, h);
+            for (let i = 0; i < POOL_SIZE; i++) {
+                const p = trailPool[i];
+                if (!p.active) continue;
+                p.life += dt;
+                if (p.life >= p.maxLife) {
+                    p.active = false;
+                    continue;
+                }
+                p.vy += 65 * dt;
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+                p.rotation += p.rotSpeed * dt;
+                const progress = p.life / p.maxLife;
+                const alpha = 1 - progress;
+                const scale = 1 - progress * 0.35;
+                const s = p.size * scale;
+
+                trailCtx.save();
+                trailCtx.globalAlpha = alpha;
+                trailCtx.translate(p.x, p.y);
+                trailCtx.rotate(p.rotation);
+                trailCtx.drawImage(p.sprite, -s / 2, -s / 2, s, s);
+                trailCtx.restore();
+            }
+
+            requestAnimationFrame(renderEffectsLoop);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeWheelCanvas();
+            resizeEffectCanvases();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createRimLeds();
+            resizeWheelCanvas();
+            resizeEffectCanvases();
+            initFallingItems();
+            requestAnimationFrame(renderEffectsLoop);
+        });
+    </script>
+</body>
+</html>
